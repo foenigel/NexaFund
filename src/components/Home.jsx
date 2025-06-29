@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import NavigationBar from "./navigationBar";
+import NavigationBar from "./NavigationBar";
 import HomeFigures from "./js/HomeFigures";
 import bitCoinHeroImage from '../assets/images/bitCoinHeroImage.png';
 import investmentIcon from '../assets/images/investmentIcon.svg';
