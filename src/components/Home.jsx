@@ -9,14 +9,23 @@ import Card from "./Card";
 import blockChainCompanies from "./js/blockChainCompanies";
 
 const Home = () => {
-    const nexaOffersRef = useRef(null);
+    const nexaOverviewRef = useRef(null);
     const nexaHomeRef = useRef(null);
+    const nexaPortfolioRef = useRef(null);
+    const nexaContactRef = useRef(null);
     const [isSelected, setIsSelected] = useState(0);
     const categories = [...new Set(blockChainCompanies.map(item => item.category))];
     const [togglefilter, setToggleFilter] = useState(() => {
     const firstCategory = categories[0];
     return blockChainCompanies.filter(company => company.category === firstCategory);
 });
+
+    const refs = {
+        Home: nexaHomeRef,
+        Overview: nexaOverviewRef,
+        Portfolio: nexaPortfolioRef,
+        Contact: nexaContactRef,
+    }
 
     const selectedCompany = (index, item) => {
         setIsSelected(index);
@@ -26,10 +35,10 @@ const Home = () => {
 
     return ( <div className="relative flex flex-col items-center w-full h-auto">
        <main className="relative w-full min-h-screen z-10 flex justify-center">
-             <div ref={nexaHomeRef} className="relative grid grid-cols-12 gap-x-5 w-full h-auto md:w-[90%]">
-                 <NavigationBar nexaHomeRef={nexaHomeRef}/>
+             <div ref={nexaHomeRef} className="relative grid grid-cols-12 gap-x-5 w-full h-auto md:w-[95%]">
+                 <NavigationBar sectionRefs={refs}/>
                 <div className="col-span-12 grid grid-cols-12 w-full bg-white/70 backdrop-blur-3xl">
-                    <section className="relative col-span-12 md:col-span-7 w-full px-4 mt-28">
+                    <section className="relative col-span-12 md:col-span-7 w-full px-4 pt-28">
                         <p className="text-black font-Inter font-normal mb-2 text-lg md:text-xl">Smart Investment Strategies on the Blockchain</p>
                         <h1 className="font-Amiri font-bold text-black text-5xl max-w-[600px] break-words md:text-6xl">Empowering the <span className="text-customSkyBlue">Future</span> of Decentralized Finance</h1>
                         <p className="text-customLightGray text-lg font-Inter font-normal max-w-[600px] leading-snug md:text-xl md:pr-16">NexaFund is a next-gen DeFi fund leveraging blockchain innovation and AI-powered analytics to maximize returns for investors globally.</p>
@@ -37,8 +46,18 @@ const Home = () => {
                             <button className="blue-button text-lg">Explore Our Portfolio</button>
                             <button className="grayOutline-button text-lg">Get in Touch</button>
                         </div>
+                        <div className="relative col-span-12 grid grid-cols-2 gap-4 place-items-center w-full mt-10 px-4 md:grid-cols-4 md:col-span-7 md:place-items-stretch md:mt-12">
+                            {
+                                HomeFigures.map(({figure, description}, index)=>(
+                                    <div key={index} className="relative w-full flex items-center flex-col md:items-start">
+                                        <h1 className="text-5xl font-bold font-Amiri md:text-4xl">{figure ? figure : "N/A"}</h1>
+                                        <p className="text-sm font-normal text-center font-Inter text-customLightGray md:text-left">{description ? description : "N/A"}</p>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </section>
-                    <section className="col-span-12 md:col-span-5 w-full mt-10 px-4 items-center md:mt-28">
+                    <section className="col-span-12 md:col-span-5 w-full px-4 items-center pt-10 md:pt-28">
                         <div className="bg-white shadow-lg shadow-customSkyBlueShadow/80 p-6 rounded-3xl">
                             <img src={bitCoinHeroImage} loading="lazy" className="rounded-3xl w-full" alt="bitCoinHeroImage" />
                         </div>
@@ -58,22 +77,12 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
-                        
                     </section>
                 </div>
 
-                <section className="col-span-12 gap-4 grid grid-cols-2 place-items-center md:grid-cols-4 w-full mt-12 px-4 md:col-span-10 md:gap-0 md:place-items-start">
-                    {
-                        HomeFigures.map(({figure, description}, index)=>(
-                            <div key={index} className="flex items-center flex-col md:items-start">
-                                <h1 className="text-5xl font-bold font-Amiri md:text-6xl">{figure ? figure : "N/A"}</h1>
-                                <p className="text-md font-normal text-center font-Inter text-customLightGray">{description ? description : "N/A"}</p>
-                            </div>
-                        ))
-                    }
-                </section>
+                
 
-                <section ref={nexaOffersRef} className="col-span-12 place-items-center mt-32">
+                <section ref={nexaOverviewRef} className="col-span-12 place-items-center pt-28">
                     <div className="flex flex-col gap-2 items-center w-full px-4">
                         <h2 className="text-black font-bold text-center font-Amiri text-4xl">What Nexa Fund Offers?</h2>
                         <p className="text-customLightGray text-center font-normal font-Inter text-md w-full max-w-full md:max-w-[850px]">At NexaFund, we're building a decentralized financial future. By combining blockchain security, automated strategies, and transparent, community-driven governance, we offer curated crypto portfolios in a sustainable, investor-first ecosystem.</p>
@@ -88,7 +97,7 @@ const Home = () => {
                     </div>
                 </section>
 
-                <section className="col-span-12 place-items-center mt-32">
+                <section ref={nexaPortfolioRef} className="col-span-12 place-items-center pt-28">
                     <div className="flex flex-col gap-2 w-full items-center px-4">
                         <h2 className="font-Amiri font-bold text-4xl text-black">Shaping the Future of Web3 Finance</h2>
                         <p className="font-Inter text-customLightGray text-md">Explore how NexaFund's strategic investments empower blockchain innovation across sectors.</p>
@@ -107,6 +116,19 @@ const Home = () => {
                             <Card key={index} {...companyDetail} />
                         ))
                     }
+                    </div>
+                </section>
+                <section ref={nexaContactRef} className="col-span-12 place-items-center pt-28">
+                    <h2 className="font-Amiri font-bold text-4xl text-black">Let's Build the Future Together</h2>
+                    <p className="font-Inter text-customLightGray text-md">Have a project or idea? We'd love to hear from you. Reach out to our team to discuss potential investments or partnerships.</p>
+                    <div className="relative mt-10 items-center grid grid-cols-12 gap-6 w-full max-w-[1050px] h-[600px] rounded-3xl overflow-hidden">
+                        <div className="bg-gray-100 h-full col-span-7 p-8 shadow-xl shadow-customSkyBlueShadow rounded-3xl">
+                            <h2 className="text-black font-Inter text-3xl font-bold">Send Us a Message</h2>
+                        </div>
+                        <div className="col-span-5 bg-slate-900 p-8 border h-full rounded-3xl">
+                            <h2 className="text-white font-Inter text-3xl font-bold">Contact Information</h2>
+                            <p className="text-white font-Inter text-xl">Email Us</p>
+                        </div>
                     </div>
                 </section>
             </div>

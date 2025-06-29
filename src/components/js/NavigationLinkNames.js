@@ -1,9 +1,8 @@
 
 const NavigationLinkNames = [
     {title: "Home"},
+    {title: "Overview"},
     {title: "Portfolio"},
-    {title: "Insights"},
-    {title: "Team"},
     {title: "Contact"},
 ];
 
