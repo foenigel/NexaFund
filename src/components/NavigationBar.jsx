@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import nexaFundLogo from '../assets/images/nexaLogo.svg';
 import Hamburger from "hamburger-react";
-import NavigationLinkNames from "./js/navigationLinkNames";
+import NavigationLinkNames from "./js/NavigationLinkNames";
 import Icons from "./Icons";
 
 const NavigationBar = ({nexaHomeRef}) => {
