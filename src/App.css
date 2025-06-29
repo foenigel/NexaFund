@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.cdnfonts.com/css/amiri");
+@import "tailwindcss";
+
+@theme {
+  --font-Inter: Inter, "sans-serif";
+  --font-Amiri: Amiri, sans-serif;
+
+  --color-customSkyBlue: #3ea8f8;
+  --color-customLightGray: #7991a3;
+  --color-customSkyBlueShadow: #dae2f4;
+  --color-customLighSkyBlue: #e7f5ff;
+}
+
+.blue-button {
+  background-color: var(--color-customSkyBlue);
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+}
+
+.grayOutline-button {
+  border: solid 2px var(--color-customLightGray);
+  border-radius: 8px;
+  padding: 10px 20px;
+  color: var(--color-customLightGray);
+}
