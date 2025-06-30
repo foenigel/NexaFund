@@ -7,6 +7,10 @@ import blockChainIcon from '../assets/images/blockChainIcon.svg';
 import NexaServices from "./js/NexaServices";
 import Card from "./Card";
 import blockChainCompanies from "./js/blockChainCompanies";
+import Footer from "./footer";
+import Icons from "./Icons";
+import SocialMediaIcons from "./js/socialMediaIcons";
+import { div } from "framer-motion/client";
 
 const Home = () => {
     const nexaOverviewRef = useRef(null);
@@ -20,6 +24,12 @@ const Home = () => {
     return blockChainCompanies.filter(company => company.category === firstCategory);
 });
 
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('');
+    const [message, setMessage] = useState('');
+    const [errors, setErrors] = useState('');
+
     const refs = {
         Home: nexaHomeRef,
         Overview: nexaOverviewRef,
@@ -27,10 +37,50 @@ const Home = () => {
         Contact: nexaContactRef,
     }
 
+    const viewHomeSection = (refs) => {
+        refs.current?.scrollIntoView({behavior: "smooth"});
+    }
+
     const selectedCompany = (index, item) => {
         setIsSelected(index);
         const filterByCategory = blockChainCompanies.filter(company => company.category === item);
         setToggleFilter(filterByCategory);
+    }
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        const throwError = {};
+
+        if (!name.trim()){
+            throwError.name = 'Name is required';
+        }
+
+        if (!subject.trim()){
+            throwError.subject = 'Subject is required';
+        }
+
+        if (!message.trim()){
+            throwError.message = 'You forgot to add a message';
+        }
+
+        if (!email){
+            throwError.email = 'Email is required';
+        }
+        else if (!/\S+@\S+\.\S+/.test(email)) {
+            throwError.email = 'Email is invalid.';
+        }
+
+        setErrors(throwError);
+
+        if (Object.keys(throwError).length === 0){
+            alert("form successfully submitted!");
+            setName('');
+            setEmail('');
+            setSubject('');
+            setMessage('');
+        }
+        viewHomeSection(refs["Home"]);
+        
     }
 
     return ( <div className="relative flex flex-col items-center w-full h-auto">
@@ -118,19 +168,66 @@ const Home = () => {
                     }
                     </div>
                 </section>
-                <section ref={nexaContactRef} className="col-span-12 place-items-center pt-28">
+                <section ref={nexaContactRef} className="col-span-12 place-items-center pt-28 px-4">
                     <h2 className="font-Amiri font-bold text-4xl text-black">Let's Build the Future Together</h2>
                     <p className="font-Inter text-customLightGray text-md">Have a project or idea? We'd love to hear from you. Reach out to our team to discuss potential investments or partnerships.</p>
-                    <div className="relative mt-10 items-center grid grid-cols-12 gap-6 w-full max-w-[1050px] h-[600px] rounded-3xl overflow-hidden">
-                        <div className="bg-gray-100 h-full col-span-7 p-8 shadow-xl shadow-customSkyBlueShadow rounded-3xl">
-                            <h2 className="text-black font-Inter text-3xl font-bold">Send Us a Message</h2>
+                    <form onSubmit={submitForm} className="relative mt-10 items-center grid grid-cols-1 gap-6 w-full max-w-[1050px] h-[620px] rounded-3xl md:grid-cols-12">
+                        <div className="bg-gray-100 h-full col-span-12 p-8 rounded-3xl md:col-span-7">
+                            <h2 className="text-black font-Amiri text-4xl font-bold">Send Us a Message</h2>
+                            <div className="flex flex-col justify-between gap-8 mt-6 md:flex-row">
+                                <div className="flex flex-col flex-1 gap-2">
+                                    <label htmlFor="" className="font-Inter">Your Name</label>
+                                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="bg-white rounded-lg border-[1px] border-customGrayBorder px-3 py-2" placeholder="John Doe" />
+                                    {
+                                        errors.name && <p className="text-red-500 text-xs">{errors.name}</p>
+                                    }
+                                </div>
+                                <div className="flex flex-1 flex-col gap-2">
+                                    <label htmlFor="" className="font-Inter">Your Email</label>
+                                    <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-white rounded-lg border-[1px] border-customGrayBorder px-3 py-2" placeholder="John@example.com" />
+                                    {
+                                        errors.email && <p className="text-red-500 text-xs">{errors.email}</p>
+                                    }
+                                </div>
+                            </div>
+                            <div className="flex flex-col flex-1 gap-2 mt-6">
+                                <label htmlFor="" className="font-Inter">Subject</label>
+                                <input value={subject} onChange={(e) => setSubject(e.target.value)} className="bg-white rounded-lg border-[1px] border-customGrayBorder px-3 py-2" type="text" placeholder="How can we help you?" />
+                                    {
+                                        errors.subject && <p className="text-red-500 text-xs">{errors.subject}</p>
+                                    }
+                            </div>
+                            <div className="flex flex-col flex-1 gap-2 mt-6">
+                                <label htmlFor="" className="font-Inter">Your Message</label>
+                                <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="bg-white rounded-lg border-[1px] border-customGrayBorder px-3 py-2 min-h-[180px]" type="text" placeholder="Tell us about your project or inquiry..." />
+                                    {
+                                        errors.message && <p className="text-red-500 text-xs">{errors.message}</p>
+                                    }
+                            </div>
+                            <button className="flex items-center justify-center gap-2 bg-customSkyBlue w-full py-2 text-white text-lg rounded-lg mt-6 cursor-pointer" onClick={submitForm}>{Icons.send}Send</button>
                         </div>
-                        <div className="col-span-5 bg-slate-900 p-8 border h-full rounded-3xl">
-                            <h2 className="text-white font-Inter text-3xl font-bold">Contact Information</h2>
-                            <p className="text-white font-Inter text-xl">Email Us</p>
+                        <div className="col-span-12 bg-customRoyalBlue place-items-center p-8 border h-full rounded-3xl md:col-span-5 md:place-items-start">
+                            <h2 className="text-white font-Amiri text-4xl font-bold max-w-full md:max-w-[100px]">Contact Information</h2>
+                            <div className="flex gap-2 w-full items-center mt-8 justify-center md:justify-start">
+                                <div className="w-6 h-6 text-white [&>svg]:w-full [&>svg]:h-full">{Icons.email}</div>
+                                <p className="text-white font-Inter text-lg font-normal">contact@nexafunds.com</p>
+                            </div>
+
+                            <div className="flex flex-col gap-2 w-full items-center mt-8 md:items-start">
+                                <h2 className="font-Amiri text-white text-3xl font-semibold">Connect With Us</h2>
+                                <div className="flex gap-4 items-center">
+                                    {
+                                        SocialMediaIcons.map(({icon}, index) => (
+                                            <div className="text-white p-4 rounded-full border-2 border-white">{icon}</div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            
                         </div>
-                    </div>
+                    </form>
                 </section>
+                <Footer/>
             </div>
         </main>
     </div> );
