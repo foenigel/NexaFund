@@ -9,7 +9,7 @@ import Card from "./Card";
 import blockChainCompanies from "./js/blockChainCompanies";
 import Footer from "./footer";
 import Icons from "./Icons";
-import SocialMediaIcons from "./js/socialMediaIcons";
+import SocialMediaIcons from './js/SocialMediaIcons';
 import { div } from "framer-motion/client";
 
 const Home = () => {
