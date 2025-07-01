@@ -7,7 +7,7 @@ import blockChainIcon from '../assets/images/blockChainIcon.svg';
 import NexaServices from "./js/NexaServices";
 import Card from "./Card";
 import blockChainCompanies from "./js/blockChainCompanies";
-import Footer from "./footer";
+import Footer from "./Footer";
 import Icons from "./Icons";
 import SocialMediaIcons from './js/SocialMediaIcons';
 import { div } from "framer-motion/client";
