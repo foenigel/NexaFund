@@ -86,15 +86,15 @@ const Home = () => {
     return ( <div className="relative flex flex-col items-center w-full h-auto">
        <main className="relative w-full min-h-screen z-10 flex justify-center">
              <div ref={nexaHomeRef} className="relative grid grid-cols-12 gap-x-5 w-full h-auto md:w-[95%]">
-                 <NavigationBar sectionRefs={refs}/>
+                 <NavigationBar viewSections={(sectionName) => viewHomeSection(refs[sectionName])}/>
                 <div className="col-span-12 grid grid-cols-12 w-full bg-white/70 backdrop-blur-3xl">
                     <section className="relative col-span-12 md:col-span-7 w-full px-4 pt-28">
                         <p className="text-black font-Inter font-normal mb-2 text-lg md:text-xl">Smart Investment Strategies on the Blockchain</p>
                         <h1 className="font-Amiri font-bold text-black text-5xl max-w-[600px] break-words md:text-6xl">Empowering the <span className="text-customSkyBlue">Future</span> of Decentralized Finance</h1>
                         <p className="text-customLightGray text-lg font-Inter font-normal max-w-[600px] leading-snug md:text-xl md:pr-16">NexaFund is a next-gen DeFi fund leveraging blockchain innovation and AI-powered analytics to maximize returns for investors globally.</p>
                         <div className="flex flex-col gap-4 mt-4 md:flex-row">
-                            <button className="blue-button text-lg">Explore Our Portfolio</button>
-                            <button className="grayOutline-button text-lg">Get in Touch</button>
+                            <button className="blue-button bg-customSkyBlue text-lg cursor-pointer shadow-xs transition-all duration-500 hover:bg-customLightSkyBlue" onClick={() => viewHomeSection(refs["Portfolio"])}>Explore Our Portfolio</button>
+                            <button className="grayOutline-button text-customGrayBorder text-lg cursor-pointer shadow-xs transition-all duration-500 hover:bg-gray-900 hover:text-white" onClick={() => {viewHomeSection(refs["Contact"])}}>Get in Touch</button>
                         </div>
                         <div className="relative col-span-12 grid grid-cols-2 gap-4 place-items-center w-full mt-10 px-4 md:grid-cols-4 md:col-span-7 md:place-items-stretch md:mt-12">
                             {
@@ -155,7 +155,7 @@ const Home = () => {
                     <div className="flex flex-wrap gap-8 px-4 justify-evenly items-center w-full max-w-[800px] mt-8 mb-10 md:gap-0">
                         {
                             categories.map((item, index) =>(
-                                <h4 key={index} className={`font-Inter font-semibold text-md cursor-pointer ${isSelected === index ? 'bg-customSkyBlue text-white px-6 py-2 rounded-full transition duration-300': 'text-black'}`} onClick={()=>selectedCompany(index, item)}>{item ? item : "N/A"}</h4>
+                                <h4 key={index} className={`font-Inter font-semibold text-md cursor-pointer transition-all duration-500 ${isSelected === index ? 'bg-customSkyBlue text-white px-6 py-2 rounded-full transition duration-300': 'text-black'}`} onClick={()=>selectedCompany(index, item)}>{item ? item : "N/A"}</h4>
                             ))
                         }
                     </div>
@@ -171,8 +171,8 @@ const Home = () => {
                 <section ref={nexaContactRef} className="col-span-12 place-items-center pt-28 px-4">
                     <h2 className="font-Amiri font-bold text-4xl text-black">Let's Build the Future Together</h2>
                     <p className="font-Inter text-customLightGray text-md">Have a project or idea? We'd love to hear from you. Reach out to our team to discuss potential investments or partnerships.</p>
-                    <form onSubmit={submitForm} className="relative mt-10 items-center grid grid-cols-1 gap-6 w-full max-w-[1050px] h-[620px] rounded-3xl md:grid-cols-12">
-                        <div className="bg-gray-100 h-full col-span-12 p-8 rounded-3xl md:col-span-7">
+                    <form onSubmit={submitForm} className="relative mt-10 items-center grid grid-cols-1 gap-6 w-full max-w-[1050px] h-auto rounded-3xl md:grid-cols-12 md:h-[620px]">
+                        <div className="bg-gray-100 h-full w-full p-8 rounded-3xl md:col-span-7">
                             <h2 className="text-black font-Amiri text-4xl font-bold">Send Us a Message</h2>
                             <div className="flex flex-col justify-between gap-8 mt-6 md:flex-row">
                                 <div className="flex flex-col flex-1 gap-2">
@@ -206,7 +206,7 @@ const Home = () => {
                             </div>
                             <button className="flex items-center justify-center gap-2 bg-customSkyBlue w-full py-2 text-white text-lg rounded-lg mt-6 cursor-pointer" onClick={submitForm}>{Icons.send}Send</button>
                         </div>
-                        <div className="col-span-12 bg-customRoyalBlue place-items-center p-8 border h-full rounded-3xl md:col-span-5 md:place-items-start">
+                        <div className="relative w-full bg-customRoyalBlue place-items-center p-8 border h-auto rounded-3xl md:col-span-5 md:place-items-start">
                             <h2 className="text-white font-Amiri text-4xl font-bold max-w-full md:max-w-[100px]">Contact Information</h2>
                             <div className="flex gap-2 w-full items-center mt-8 justify-center md:justify-start">
                                 <div className="w-6 h-6 text-white [&>svg]:w-full [&>svg]:h-full">{Icons.email}</div>
@@ -218,7 +218,7 @@ const Home = () => {
                                 <div className="flex gap-4 items-center">
                                     {
                                         SocialMediaIcons.map(({icon}, index) => (
-                                            <div className="text-white p-4 rounded-full border-2 border-white">{icon}</div>
+                                            <div key={index} className="text-white p-4 rounded-full border-2 border-white cursor-pointer transition-all duration-500 hover:bg-white hover:text-customRoyalBlue" onClick={() => {viewHomeSection(refs["Home"])}}>{icon}</div>
                                         ))
                                     }
                                 </div>
@@ -227,7 +227,7 @@ const Home = () => {
                         </div>
                     </form>
                 </section>
-                <Footer/>
+                <Footer viewHomeSection = {() => viewHomeSection(refs["Home"])}/>
             </div>
         </main>
     </div> );

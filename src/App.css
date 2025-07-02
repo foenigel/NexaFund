@@ -12,18 +12,17 @@
   --color-customLighSkyBlue: #e7f5ff;
   --color-customRoyalBlue: #001647;
   --color-customGrayBorder: #7991a3;
+  --color-customLightSkyBlue: #60beff;
 }
 
 .blue-button {
-  background-color: var(--color-customSkyBlue);
   padding: 10px 20px;
   border-radius: 8px;
   color: white;
 }
 
 .grayOutline-button {
-  border: solid 2px var(--color-customLightGray);
+  border: solid 1px var(--color-customLightGray);
   border-radius: 8px;
   padding: 10px 20px;
-  color: var(--color-customLightGray);
 }
