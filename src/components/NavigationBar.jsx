@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 const NavigationBar = ({viewSections}) => {
     const [isOpen, setIsOpen] = useState(false);
     return ( 
-    <div className="col-span-12 w-full fixed z-50 md:w-[95%]">
-        <div className="px-4 h-[100px] bg-white w-full flex justify-between items-center font-Inter ">
+    <div className="col-span-12 w-full fixed z-50 top-0 bg-white">
+        <div className="px-4 h-[90px] w-full flex justify-between items-center font-Inter md:px-10">
             <div className="flex gap-4 items-center">
             <img src={nexaFundLogo} className="w-12 h-12" alt="" />
             <h2 className="text-black text-2xl font-semibold">Nexa Fund</h2>
